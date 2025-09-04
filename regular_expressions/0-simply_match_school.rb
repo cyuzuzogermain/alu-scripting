@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-# This script takes one argument and checks if it matches exactly "School"
+# This script takes one argument and checks if it contains the word "School"
 
 input = ARGV[0]
 
-if input =~ /^School$/
+if input =~ /\bSchool\b/
   puts input
 end
