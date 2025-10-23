@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
-""" import the necessary modules to use"""
 import requests
-
+""" importing modules"""
 
 def top_ten(subreddit):
     """Prints the titles of the first 10 hot posts of a given subreddit."""
