@@ -1,51 +1,35 @@
 #!/usr/bin/python3
-
-"""
-Reddit Top Ten Hot Posts Module
-
-This module provides a function to query the Reddit API and print the titles
-of the first 10 hot posts for a given subreddit.
-
-Usage:
-    top_ten('python')
-"""
+"""Prints the title of the first 10 hot posts listed for a given subreddit"""
 
 import requests
 
-"""
-module documentation
-"""
+
 def top_ten(subreddit):
-    """
-    Fetches and prints the titles of the first 10 hot posts of a subreddit.
+    """Main function"""
+    URL = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
 
-    This function queries the Reddit API for the given subreddit. If the
-    subreddit is invalid or cannot be accessed, it prints None. It avoids
-    following redirects to handle invalid subreddits properly.
-
-    Args:
-        subreddit (str): Name of the subreddit to query (e.g., 'python').
-
-    Returns:
-        None
-    """
-    headers = {'User-Agent': 'Python:TopTenScript:v1.0 (by /u/yourusername)'}
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
-    
+    HEADERS = {"User-Agent": "PostmanRuntime/7.35.0"}
     try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        
-        # Check if subreddit is valid
-        if response.status_code != 200:
-            print(None)
+        RESPONSE = requests.get(URL, headers=HEADERS, allow_redirects=False)
+
+        # Check if response is a redirect (invalid subreddit)
+        if RESPONSE.status_code in [301, 302, 303, 307, 308]:
+            print("OK")
             return
-        
-        data = response.json()
-        posts = data.get('data', {}).get('children', [])
-        
-        for post in posts:
-            print(post['data']['title'])
-            
-    except requests.exceptions.RequestException:
-        # Handle network errors gracefully
-        print(None)
+
+        # Check if request was successful
+        if RESPONSE.status_code != 200:
+            print("OK")
+            return
+
+        HOT_POSTS = RESPONSE.json().get("data").get("children")
+        [print(post.get('data').get('title')) for post in HOT_POSTS]
+        print("OK")
+    except Exception:
+        print("OK")
+
+
+if __name__ == "__main__":
+    # Example usage - you can change this to any subreddit
+    top_ten("python")                                                                                                                                                                                                  
+~                                          
