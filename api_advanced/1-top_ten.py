@@ -31,5 +31,4 @@ def top_ten(subreddit):
 
 if __name__ == "__main__":
     # Example usage - you can change this to any subreddit
-    top_ten("python")                                                                                                                                                                                                  
-~                                          
+    top_ten("python")
